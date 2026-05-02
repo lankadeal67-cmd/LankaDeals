@@ -1,0 +1,157 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Purnima Thakshila Market</title>
+<style>
+body {
+    font-family: Arial;
+    margin: 0;
+    background: #f2f2f2;
+}
+header {
+    background: #0077cc;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+.container {
+    padding: 20px;
+}
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background: white;
+    padding: 10px;
+}
+nav button {
+    margin: 5px;
+    padding: 10px;
+    cursor: pointer;
+}
+.map {
+    text-align: center;
+    margin: 15px;
+}
+.districts button {
+    margin: 3px;
+    padding: 6px;
+    font-size: 12px;
+}
+.items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    gap: 10px;
+}
+.item {
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+}
+.form {
+    background: white;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+input, select {
+    width: 90%;
+    padding: 8px;
+    margin: 5px;
+}
+button.add {
+    background: green;
+    color: white;
+    padding: 10px;
+}
+</style>
+</head>
+<body><header>
+    <h1>Purnima Thakshila Market</h1>
+    <p>Buy & Sell Anything in Sri Lanka</p>
+</header><nav>
+    <button onclick="filterCategory('all')">All</button>
+    <button onclick="filterCategory('vehicle')">Vehicles</button>
+    <button onclick="filterCategory('house')">Houses</button>
+    <button onclick="filterCategory('land')">Lands</button>
+    <button onclick="filterCategory('animals')">Animals</button>
+    <button onclick="filterCategory('jewelry')">Jewelry</button>
+</nav><div class="map">
+    <h3>Sri Lanka District Filter</h3>
+    <div class="districts">
+        <button onclick="filterDistrict('Colombo')">Colombo</button>
+        <button onclick="filterDistrict('Kandy')">Kandy</button>
+        <button onclick="filterDistrict('Galle')">Galle</button>
+        <button onclick="filterDistrict('Jaffna')">Jaffna</button>
+        <button onclick="filterDistrict('All')">Show All</button>
+    </div>
+</div><div class="container"><div class="items" id="items"><div class="item vehicle" data-district="Colombo">
+<h3>Car for Sale</h3>
+<p>Price: LKR 2,000,000</p>
+<p>District: Colombo</p>
+<p>Contact: 0771234567</p>
+</div><div class="item house" data-district="Kandy">
+<h3>House in Kandy</h3>
+<p>Price: LKR 15,000,000</p>
+<p>District: Kandy</p>
+<p>Contact: 0719876543</p>
+</div></div><div class="form">
+<h2>Sell Your Item</h2>
+<input id="title" placeholder="Title">
+<input id="price" placeholder="Price">
+<input id="phone" placeholder="Phone">
+<input id="district" placeholder="District (Colombo/Kandy/etc)">
+<select id="category">
+<option value="vehicle">Vehicle</option>
+<option value="house">House</option>
+<option value="land">Land</option>
+<option value="animals">Animals</option>
+<option value="jewelry">Jewelry</option>
+</select>
+<br>
+<button class="add" onclick="addItem()">Add Item</button>
+</div></div><script>
+function filterCategory(cat){
+    let items=document.querySelectorAll('.item');
+    items.forEach(i=>{
+        if(cat==='all'||i.classList.contains(cat)){
+            i.style.display='block';
+        }else{
+            i.style.display='none';
+        }
+    });
+}
+
+function filterDistrict(d){
+    let items=document.querySelectorAll('.item');
+    items.forEach(i=>{
+        if(d==='All'||i.dataset.district===d){
+            i.style.display='block';
+        }else{
+            i.style.display='none';
+        }
+    });
+}
+
+function addItem(){
+    let title=document.getElementById('title').value;
+    let price=document.getElementById('price').value;
+    let phone=document.getElementById('phone').value;
+    let district=document.getElementById('district').value;
+    let category=document.getElementById('category').value;
+
+    let div=document.createElement('div');
+    div.className='item '+category;
+    div.dataset.district=district;
+
+    div.innerHTML=`
+        <h3>${title}</h3>
+        <p>Price: ${price}</p>
+        <p>District: ${district}</p>
+        <p>Contact: ${phone}</p>
+    `;
+
+    document.getElementById('items').appendChild(div);
+}
+</script></body>
+</html>
